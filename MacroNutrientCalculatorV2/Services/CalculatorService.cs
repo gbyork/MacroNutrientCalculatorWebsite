@@ -1,5 +1,7 @@
 ﻿using MacroNutrientCalculatorV2.Models;
+using Microsoft.AspNetCore.Components.Forms;
 
+//adding this here incase I need to review microsoft documentation. https://learn.microsoft.com/aspnet/core
 
 namespace MacroNutrientCalculatorV2.Services
 {
@@ -13,46 +15,81 @@ namespace MacroNutrientCalculatorV2.Services
     {
         public ServiceResult MacroNutrientCalculation(MacroNutrientCalculationContainer input)
         {
-            ServiceResult result = new ServiceResult
+            ServiceResult result = new ServiceResult();
+
+            double calorieIntake = calculateCalorieIntake(input);
+            double carbIntake = calculateCarbIntake(calorieIntake, input);
+            double fatIntake = calculateFatIntake(calorieIntake, input);
+            double proteinIntake = calculateProteinIntake(calorieIntake, input);
+
+            if (calorieIntake < 0)
             {
-                Success = true,
-                Message = "woohoo"
-            };
+                result.Success = false;
+                result.Message = "An error occurred in this calculation, please try again.";
+            }
+
+            if (calorieIntake > 0)
+            {
+                result.Success = true;
+                result.Message = calorieIntake.ToString() + carbIntake.ToString() + fatIntake.ToString() + proteinIntake.ToString();
+            }
             return result;
         }
 
-        public double CalculateFatIntake (int weight)
+        public double calculateCalorieIntake (MacroNutrientCalculationContainer input) 
         {
-            double fatIntake = weight * 0.5;
-            return fatIntake;
-        }
+            double height = getTotalHeightInCentimeters(input.heightFeetTall, input.heightInchesTall);
+            double weight = getWeightInKilograms(input.bodyWeight);
 
-        public double CalculateCalorieIntake (MacroNutrientCalculationContainer input) 
-        {
-            int height = getTotalHeight(input.heightFeetTall, input.heightInchesTall);
-
-            switch (input.age)
+            switch (input.gender)
             {
                 //Male calc
                 case 0:
-                    double calorieIntakeMale = input.bodyWeight * 4.5 + height - 5 * input.age + 5;
+                    double calorieIntakeMale = (10 * weight * 0.45359237) + (6.25 * height) - (5 * input.age) + 5;
                     return calorieIntakeMale;
                 //Female calc
                 case 1:
-                    double calorieIntakeFemale = input.bodyWeight;
+                    double calorieIntakeFemale = (10 * weight) + (6.25 * height) - (5 * input.age) -161;
                     return calorieIntakeFemale;
                 default:
                     return 0;
             }
         }
 
-        public int getTotalHeight (int heightFeet, int heightInches)
+        public double getTotalHeightInCentimeters (int heightFeet, int heightInches)
         {
             int heightFeetToInches = heightFeet * 12;
 
-            int totalHeight = heightFeetToInches + heightInches;
+            int totalHeightToInches = heightFeetToInches + heightInches;
 
-            return totalHeight;
+            double totalHeightToCentimeters = totalHeightToInches * 2.54;
+
+            return totalHeightToCentimeters;
+        }
+
+        public double getWeightInKilograms(double bodyWeightInPounds)
+        {
+            double bodyWeightKilograms = bodyWeightInPounds * 0.45359237;
+
+            return bodyWeightKilograms;
+        }
+
+        public double calculateCarbIntake(double calorieIntake, MacroNutrientCalculationContainer input)
+        {
+            double fatIntake = calorieIntake * (0.01 * input.carbPercentage);
+            return fatIntake;
+        }
+
+        public double calculateFatIntake(double calorieIntake, MacroNutrientCalculationContainer input)
+        {
+            double fatIntake = calorieIntake * (0.01 * input.fatPercentage);
+            return fatIntake;
+        }
+
+        public double calculateProteinIntake(double calorieIntake, MacroNutrientCalculationContainer input)
+        {
+            double fatIntake = calorieIntake * (0.01 * input.proteinPercentage);
+            return fatIntake;
         }
     }
 }
