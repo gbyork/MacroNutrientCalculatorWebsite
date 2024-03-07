@@ -9,5 +9,8 @@
         public int gender { get; set; }
         public byte goal {  get; set; }
         public byte workoutFrequency {  get; set; }
+        public int carbPercentage {  get; set; }
+        public int fatPercentage {  get; set; }
+        public int proteinPercentage { get; set; }
     }
 }
