@@ -18,9 +18,9 @@ namespace MacroNutrientCalculatorV2.Services
             ServiceResult result = new ServiceResult();
 
             double calorieIntake = calculateCalorieIntake(input);
-            double carbIntake = calculateCarbIntake(calorieIntake, input);
-            double fatIntake = calculateFatIntake(calorieIntake, input);
-            double proteinIntake = calculateProteinIntake(calorieIntake, input);
+            double carbIntake = calculateNutrientIntake(calorieIntake, input.carbPercentage);
+            double fatIntake = calculateFatNutrientIntake(calorieIntake, input.fatPercentage);
+            double proteinIntake = calculateNutrientIntake(calorieIntake, input.proteinPercentage);
 
             if (calorieIntake < 0)
             {
@@ -31,12 +31,16 @@ namespace MacroNutrientCalculatorV2.Services
             if (calorieIntake > 0)
             {
                 result.Success = true;
-                result.Message = calorieIntake.ToString() + carbIntake.ToString() + fatIntake.ToString() + proteinIntake.ToString();
+                string roundedMessage = $"Recommended Calorie Intake: {Math.Round(calorieIntake, 0)}\n" +
+                                        $"Recommended Carb Intake: {Math.Round(carbIntake, 0)} grams\n" +
+                                        $"Recommended Fat Intake: {Math.Round(fatIntake, 0)} grams\n" +
+                                        $"Recommended Protein Intake: {Math.Round(proteinIntake, 0)} grams";
+                result.Message = roundedMessage;
             }
             return result;
         }
 
-        public double calculateCalorieIntake (MacroNutrientCalculationContainer input) 
+        public double calculateCalorieIntake(MacroNutrientCalculationContainer input)
         {
             double height = getTotalHeightInCentimeters(input.heightFeetTall, input.heightInchesTall);
             double weight = getWeightInKilograms(input.bodyWeight);
@@ -49,10 +53,10 @@ namespace MacroNutrientCalculatorV2.Services
                     return calorieIntakeMale;
                 //Female calc
                 case 1:
-                    double calorieIntakeFemale = (10 * weight) + (6.25 * height) - (5 * input.age) -161;
+                    double calorieIntakeFemale = (10 * weight) + (6.25 * height) - (5 * input.age) - 161;
                     return calorieIntakeFemale;
                 default:
-                    return 0;
+                    throw new ArgumentException("Invalid gender value");
             }
         }
 
@@ -74,22 +78,13 @@ namespace MacroNutrientCalculatorV2.Services
             return bodyWeightKilograms;
         }
 
-        public double calculateCarbIntake(double calorieIntake, MacroNutrientCalculationContainer input)
+        private double calculateNutrientIntake(double calorieIntake, double percentage)
         {
-            double fatIntake = calorieIntake * (0.01 * input.carbPercentage);
-            return fatIntake;
+            return (calorieIntake * (0.01 * percentage))/4;
         }
-
-        public double calculateFatIntake(double calorieIntake, MacroNutrientCalculationContainer input)
+        private double calculateFatNutrientIntake(double calorieIntake, double percentage)
         {
-            double fatIntake = calorieIntake * (0.01 * input.fatPercentage);
-            return fatIntake;
-        }
-
-        public double calculateProteinIntake(double calorieIntake, MacroNutrientCalculationContainer input)
-        {
-            double fatIntake = calorieIntake * (0.01 * input.proteinPercentage);
-            return fatIntake;
+            return (calorieIntake * (0.01 * percentage)) / 9;
         }
     }
 }

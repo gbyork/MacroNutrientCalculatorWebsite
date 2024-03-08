@@ -4,7 +4,68 @@
     ViewData["Title"] = "MacroNutrientCalculator";
 }
 
-<div class="text-center">
-    <h1 class="display-4">This is the calculator page.</h1>
-    <p> Thank ya for visiting</p>
+<div class="container">
+    <h1>MacroNutrient Calculator</h1>
+    <label for="gender">Gender:</label>
+    <select id="gender">
+        <option value="0">Male</option>
+        <option value="1">Female</option>
+    </select>
+    <br>
+    <label for="age">Age:</label>
+    <input type="text" id="age">
+    <br>
+    <label for="bodyWeight">Body Weight (lbs):</label>
+    <input type="text" id="bodyWeight">
+    <br>
+    <label for="heightFeetTall">Height (Feet):</label>
+    <input type="text" id="heightFeetTall">
+    <br>
+    <label for="heightInchesTall">Height (Inches):</label>
+    <input type="text" id="heightInchesTall">
+    <br>
+    <label for="carbPercentage">Carb Percentage:</label>
+    <input type="text" id="carbPercentage">
+    <br>
+    <label for="fatPercentage">Fat Percentage:</label>
+    <input type="text" id="fatPercentage">
+    <br>
+    <label for="proteinPercentage">Protein Percentage:</label>
+    <input type="text" id="proteinPercentage">
+    <br>
+    <button id="calculateBtn">Calculate</button>
+    <br>
+    <div id="result"></div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#calculateBtn').click(function () {
+                var input = {
+                    gender: $('#gender').val(),
+                    age: parseInt($('#age').val()),
+                    bodyWeight: parseFloat($('#bodyWeight').val()),
+                    heightFeetTall: parseInt($('#heightFeetTall').val()),
+                    heightInchesTall: parseInt($('#heightInchesTall').val()),
+                    carbPercentage: parseInt($('#carbPercentage').val()),
+                    fatPercentage: parseInt($('#fatPercentage').val()),
+                    proteinPercentage: parseInt($('#proteinPercentage').val())
+                };
+
+                $.ajax({
+                    url: '/api/MacroNutrient/Calculate',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(input),
+                    success: function (response) {
+                        $('#result').text(response);
+                    },
+                    error: function (xhr, status, error) {
+                        $('#result').text('Error: ' + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}

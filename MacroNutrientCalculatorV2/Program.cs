@@ -1,7 +1,11 @@
+using MacroNutrientCalculatorV2.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+builder.Services.AddScoped<CalculatorService>();
 
 var app = builder.Build();
 
@@ -20,6 +24,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // Map controllers to handle incoming requests.
+    endpoints.MapRazorPages();
+});
 
 app.Run();
+
