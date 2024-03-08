@@ -33,6 +33,15 @@
     <label for="proteinPercentage">Protein Percentage:</label>
     <input type="text" id="proteinPercentage">
     <br>
+    <label for="activityFrequency">Activity Frequency:</label>
+    <select id="activityFrequency">
+        <option value="0">Limited exercise</option>
+        <option value="1">light exercise less than 3 days per week</option>
+        <option value="2">moderate exercise most days of the week</option>
+        <option value="3">hard exercise every day</option>
+        <option value="4">strenuous exercise two or more times per day</option>
+    </select>
+    <br>
     <button id="calculateBtn">Calculate</button>
     <br>
     <div id="result"></div>
@@ -48,6 +57,7 @@
                     bodyWeight: parseFloat($('#bodyWeight').val()),
                     heightFeetTall: parseInt($('#heightFeetTall').val()),
                     heightInchesTall: parseInt($('#heightInchesTall').val()),
+                    activityFrequency: $('#activityFrequency').val(),
                     carbPercentage: parseInt($('#carbPercentage').val()),
                     fatPercentage: parseInt($('#fatPercentage').val()),
                     proteinPercentage: parseInt($('#proteinPercentage').val())

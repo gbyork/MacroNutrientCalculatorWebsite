@@ -31,9 +31,9 @@ namespace MacroNutrientCalculatorV2.Services
             if (calorieIntake > 0)
             {
                 result.Success = true;
-                string roundedMessage = $"Recommended Calorie Intake: {Math.Round(calorieIntake, 0)}\n" +
-                                        $"Recommended Carb Intake: {Math.Round(carbIntake, 0)} grams\n" +
-                                        $"Recommended Fat Intake: {Math.Round(fatIntake, 0)} grams\n" +
+                string roundedMessage = $"Recommended Calorie Intake: {Math.Round(calorieIntake, 0)}, " +
+                                        $"Recommended Carb Intake: {Math.Round(carbIntake, 0)} grams, " +
+                                        $"Recommended Fat Intake: {Math.Round(fatIntake, 0)} grams, " +
                                         $"Recommended Protein Intake: {Math.Round(proteinIntake, 0)} grams";
                 result.Message = roundedMessage;
             }
@@ -44,19 +44,49 @@ namespace MacroNutrientCalculatorV2.Services
         {
             double height = getTotalHeightInCentimeters(input.heightFeetTall, input.heightInchesTall);
             double weight = getWeightInKilograms(input.bodyWeight);
-
+            double calorieIntakeBase;
+            double totalCalorieIntake;
             switch (input.gender)
             {
                 //Male calc
                 case 0:
-                    double calorieIntakeMale = (10 * weight * 0.45359237) + (6.25 * height) - (5 * input.age) + 5;
-                    return calorieIntakeMale;
+                    calorieIntakeBase = (10 * weight * 0.45359237) + (6.25 * height) - (5 * input.age) + 5;
+                    break;
+
                 //Female calc
                 case 1:
-                    double calorieIntakeFemale = (10 * weight) + (6.25 * height) - (5 * input.age) - 161;
-                    return calorieIntakeFemale;
+                    calorieIntakeBase = (10 * weight) + (6.25 * height) - (5 * input.age) - 161;
+                    break;
+
                 default:
                     throw new ArgumentException("Invalid gender value");
+            }
+
+            switch (input.activityFrequency)
+            {
+                //Sedentary
+                case 0:
+                    totalCalorieIntake = calorieIntakeBase * 1.2;
+                    return totalCalorieIntake;
+                //Lightly active
+                case 1:
+                    totalCalorieIntake = calorieIntakeBase * 1.375;
+                    return totalCalorieIntake;
+                //Moderately active
+                case 2:
+                    totalCalorieIntake = calorieIntakeBase * 1.55;
+                    return totalCalorieIntake;
+                //Very active
+                case 3:
+                    totalCalorieIntake = calorieIntakeBase * 1.725;
+                    return totalCalorieIntake;
+                //Extra active
+                case 4:
+                    totalCalorieIntake = calorieIntakeBase * 1.9;
+                    return totalCalorieIntake;
+
+                default:
+                    throw new ArgumentException("Invalid activity frequency value");
             }
         }
 
