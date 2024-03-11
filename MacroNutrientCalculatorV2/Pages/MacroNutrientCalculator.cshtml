@@ -7,39 +7,39 @@
 <div class="container">
     <h1>MacroNutrient Calculator</h1>
     <label for="gender">Gender:</label>
-    <select id="gender">
+    <select id="gender" required>
         <option value="0">Male</option>
         <option value="1">Female</option>
     </select>
     <br>
     <label for="age">Age:</label>
-    <input type="text" id="age">
+    <input type="text" id="age" required>
     <br>
     <label for="bodyWeight">Body Weight (lbs):</label>
-    <input type="text" id="bodyWeight">
+    <input type="text" id="bodyWeight" required>
     <br>
     <label for="heightFeetTall">Height (Feet):</label>
-    <input type="text" id="heightFeetTall">
+    <input type="text" id="heightFeetTall" required>
     <br>
     <label for="heightInchesTall">Height (Inches):</label>
     <input type="text" id="heightInchesTall">
     <br>
     <label for="carbPercentage">Carb Percentage:</label>
-    <input type="text" id="carbPercentage">
+    <input type="text" id="carbPercentage" required>
     <br>
-    <label for="fatPercentage">Fat Percentage:</label>
-    <input type="text" id="fatPercentage">
+    <label for="fatPercentage">Fat Percentage:</label>  
+    <input type="text" id="fatPercentage" required>
     <br>
     <label for="proteinPercentage">Protein Percentage:</label>
-    <input type="text" id="proteinPercentage">
+    <input type="text" id="proteinPercentage" required>
     <br>
     <label for="activityFrequency">Activity Frequency:</label>
-    <select id="activityFrequency">
+    <select id="activityFrequency" required>
         <option value="0">Limited exercise</option>
-        <option value="1">light exercise less than 3 days per week</option>
-        <option value="2">moderate exercise most days of the week</option>
-        <option value="3">hard exercise every day</option>
-        <option value="4">strenuous exercise two or more times per day</option>
+        <option value="1">Light exercise less than 3 days per week</option>
+        <option value="2">Moderate exercise most days of the week</option>
+        <option value="3">Hard exercise every day</option>
+        <option value="4">Strenuous exercise two or more times per day</option>
     </select>
     <br>
     <button id="calculateBtn">Calculate</button>
