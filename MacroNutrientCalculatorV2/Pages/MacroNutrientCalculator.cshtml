@@ -24,14 +24,14 @@
     <label for="heightInchesTall">Height (Inches):</label>
     <input type="text" id="heightInchesTall">
     <br>
-    <label for="carbPercentage">Carb Percentage:</label>
-    <input type="text" id="carbPercentage" required>
+    <label for="carbPercentage">Carb Percentage (Recommendation: 45%–65%):</label>
+    <input type="text" id="carbPercentage">
     <br>
-    <label for="fatPercentage">Fat Percentage:</label>  
-    <input type="text" id="fatPercentage" required>
+    <label for="fatPercentage">Fat Percentage (Recommendation 20%–35%) :</label>
+    <input type="text" id="fatPercentage">
     <br>
-    <label for="proteinPercentage">Protein Percentage:</label>
-    <input type="text" id="proteinPercentage" required>
+    <label for="proteinPercentage">Protein Percentage (Recommendation 10%–35%):</label>
+    <input type="text" id="proteinPercentage">
     <br>
     <label for="activityFrequency">Activity Frequency:</label>
     <select id="activityFrequency" required>
@@ -48,34 +48,5 @@
 </div>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#calculateBtn').click(function () {
-                var input = {
-                    gender: $('#gender').val(),
-                    age: parseInt($('#age').val()),
-                    bodyWeight: parseFloat($('#bodyWeight').val()),
-                    heightFeetTall: parseInt($('#heightFeetTall').val()),
-                    heightInchesTall: parseInt($('#heightInchesTall').val()),
-                    activityFrequency: $('#activityFrequency').val(),
-                    carbPercentage: parseInt($('#carbPercentage').val()),
-                    fatPercentage: parseInt($('#fatPercentage').val()),
-                    proteinPercentage: parseInt($('#proteinPercentage').val())
-                };
-
-                $.ajax({
-                    url: '/api/MacroNutrient/Calculate',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(input),
-                    success: function (response) {
-                        $('#result').text(response);
-                    },
-                    error: function (xhr, status, error) {
-                        $('#result').text('Error: ' + xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="~/js/site.js"></script>
 }
