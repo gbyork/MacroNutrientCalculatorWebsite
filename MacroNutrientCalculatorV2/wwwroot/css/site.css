@@ -1,16 +1,13 @@
-/* Base font size */
 html {
     font-size: 14px;
 }
 
-/* Responsive font size */
 @media (min-width: 768px) {
     html {
         font-size: 16px;
     }
 }
 
-/* Focus styles */
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
@@ -19,7 +16,6 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-/* Label styles */
 label {
     font-weight: bold;
     margin-bottom: 5px;
@@ -27,7 +23,6 @@ label {
     width: 100%;
 }
 
-/* Input and select styles */
 input[type="text"],
 select {
     width: calc(100% - 20px);
@@ -39,16 +34,14 @@ select {
     box-sizing: border-box;
 }
 
-/* Heading styles */
 h1, .display-4, text-center {
     margin-top: 150px;
     text-align: center;
     margin-bottom: 50px;
     color: #333;
-    font-size: 4rem; /* Increase font size for heading */
+    font-size: 4rem;
 }
 
-/* Button styles */
 button {
     padding: 10px;
     background-color: #007bff;
@@ -62,18 +55,16 @@ button {
         background-color: #0056b3;
     }
 
-/* Result display styles */
 #result {
     margin-top: 20px;
     text-align: center;
-    word-wrap: break-word; /* For older browser compatibility */
-    max-width: 100%; /* Limit the width of the result container */
-    display: inline-block; /* Ensure the result container only takes up the necessary space */
-    vertical-align: top; /* Align the result container with the top of the input boxes */
+    max-width: 100%; 
+    display: block; 
+    word-wrap: break-word; 
+    word-break: break-all; 
 }
 
 
-/* Navbar styles */
 .navbar {
     position: fixed;
     top: 0;
@@ -81,7 +72,7 @@ button {
     width: 100%;
     background-color: #333;
     color: #fff;
-    padding: 0; /* Reduce padding to make the navbar smaller */
+    padding: 0; 
     text-align: center;
     z-index: 1000;
 }
@@ -95,23 +86,23 @@ button {
 .footer {
     bottom: auto;
     width: 100%;
-    height: 20px; /* Height of the footer */
+    height: 20px; 
     background: #6cf;
 }
 
 .footer[b-adscr027oy] {
     bottom: auto;
     width: 100%;
-    height: 600px; /* Height of the footer */
+    height: 600px; 
     background: #6cf;
 }
-/* Body styles */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden; 
 }
 
 .content {
@@ -121,7 +112,7 @@ body {
     justify-content: space-between;
 }
 
-/* Container styles */
+
 .container {
     bottom: auto;
     display: flex;
@@ -129,4 +120,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0px;
+    max-width: 600px;
+    margin: 0 auto;
 }
