@@ -1,18 +1,13 @@
 ﻿using MacroNutrientCalculatorV2.Models;
 using Microsoft.AspNetCore.Components.Forms;
 
-//adding this here incase I need to review microsoft documentation. https://learn.microsoft.com/aspnet/core
-
 namespace MacroNutrientCalculatorV2.Services
 {
-
-    /// <summary>
-    /// Information provided by https://www.healthline.com/nutrition/how-to-count-macros#macros . Will be using the following Calcs
-    /// Males: calories/day = 10 x weight (kilograms, or kg) + 6.25 x height (centimeters, or cm) – 5 x age (years) + 5
-    /// Females: calories/day = 10 x weight(kg) + 6.25 x height(cm) – 5 x age(years) – 161
-    /// </summary>
     public class CalculatorService 
     {
+        /// <summary>
+        /// Endpoint method, and main method to call and gather all the data needed for response
+        /// </summary>
         public ServiceResult MacroNutrientCalculation(MacroNutrientCalculationContainer input)
         {
             ServiceResult result = new ServiceResult();
@@ -40,6 +35,11 @@ namespace MacroNutrientCalculatorV2.Services
             return result;
         }
 
+        /// <summary>
+        /// Information provided by https://www.healthline.com/nutrition/how-to-count-macros#macros . Will be using the following Calcs
+        /// Males: calories/day = 10 x weight (kilograms, or kg) + 6.25 x height (centimeters, or cm) – 5 x age (years) + 5
+        /// Females: calories/day = 10 x weight(kg) + 6.25 x height(cm) – 5 x age(years) – 161
+        /// </summary>
         public double calculateCalorieIntake(MacroNutrientCalculationContainer input)
         {
             double height = getTotalHeightInCentimeters(input.heightFeetTall, input.heightInchesTall);
@@ -90,6 +90,9 @@ namespace MacroNutrientCalculatorV2.Services
             }
         }
 
+        /// <summary>
+        /// Gets the total height of the end user converted to inches then converted it to centimeters
+        /// </summary>
         public double getTotalHeightInCentimeters (int heightFeet, int heightInches)
         {
             int heightFeetToInches = heightFeet * 12;
@@ -101,6 +104,9 @@ namespace MacroNutrientCalculatorV2.Services
             return totalHeightToCentimeters;
         }
 
+        /// <summary>
+        /// Converting weight from pounds to kilograms for calorie calculation
+        /// </summary>
         public double getWeightInKilograms(double bodyWeightInPounds)
         {
             double bodyWeightKilograms = bodyWeightInPounds * 0.45359237;
@@ -108,10 +114,17 @@ namespace MacroNutrientCalculatorV2.Services
             return bodyWeightKilograms;
         }
 
+        /// <summary>
+        /// Calculate the nutrient intake for protein and carbs
+        /// </summary>
         private double calculateNutrientIntake(double calorieIntake, double percentage)
         {
             return (calorieIntake * (0.01 * percentage))/4;
         }
+
+        /// <summary>
+        /// Calculate the nutrient intake for fat 
+        /// </summary>
         private double calculateFatNutrientIntake(double calorieIntake, double percentage)
         {
             return (calorieIntake * (0.01 * percentage)) / 9;
